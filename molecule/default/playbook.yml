@@ -1,0 +1,56 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  become_user: root
+  pre_tasks:
+    - name: Creating Standard Groups
+      group:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - sysadmin
+        - webadmin
+  vars:
+    users:
+      - username: tom
+        group: tom
+        groups:
+          - sysadmin
+        shell: '/bin/bash'
+        ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSUGPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XAt3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/EnmZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbxNrRFi9wrf+M7Q== tom@mylaptop.local
+        bashrc: |+
+            #!/usr/bin/env bash
+
+            # Path to the bash it configuration
+            export BASH_IT="/home/giggio/.bash_it"
+
+            # Lock and Load a custom theme file
+            # location /.bash_it/themes/
+            export BASH_IT_THEME='powerline-multiline'
+
+            # (Advanced): Change this to the name of your remote repo if you
+            # cloned bash-it with a remote other than origin such as `bash-it`.
+            # export BASH_IT_REMOTE='bash-it'
+
+            # Your place for hosting Git repos. I use this for private repos.
+            export GIT_HOSTING='git@git.domain.com'
+
+      - username: mike
+        group: mike
+        groups:
+          - webadmin
+        ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSUGPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XAt3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/EnmZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbxNrRFi9wrf+M7Q== mike@mylaptop.local
+        bash_profile: |+
+            # aliases
+            alias cd..="cd .."
+            alias l="ls -al"
+            alias lp="ls -p"
+            alias h=history
+
+            # the "kp" alias ("que pasa"), in honor of tony p.
+            alias kp="ps aux"
+
+  roles:
+    #- role: ../../../user-management
+    - role: user-management

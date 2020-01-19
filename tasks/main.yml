@@ -1,0 +1,51 @@
+---
+# tasks file for user-management
+
+
+- name: Creating Group
+  group:
+    name: "{{ item.group }}"
+    gid: "{{ item.gid | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+  loop: "{{ users | selectattr('group','defined') | list }}"
+
+- name: Creating Users
+  user:
+    name: "{{ item.username }}"
+    uid: "{{ item.uid | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    groups: "{{ item.groups | default('') }}"
+    shell: "{{ item.shell | default('/sbin/nologin') }}"
+    password: "{{ item.password | default('!!') }}"
+    create_home: "{{ item.create_home | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+  no_log: true
+  loop: "{{ users }}"
+
+
+- name: Configuring SSH Access
+  authorized_key:
+    user: "{{ item.username }}"
+    state: present
+    key: "{{ item.ssh_key }}"
+    key_options: "{{ item.key_options | default(omit) }}"
+  when: item.ssh_key is defined
+  loop: "{{ users }}"
+
+- name: Configuring Bashrc
+  copy:
+    content: "{{ item.bashrc }}"
+    dest: "{{ item.home | default('/home/' + item.username) }}/.bashrc"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+  when: item.bashrc is defined
+  loop: "{{ users }}"
+
+- name: Configuring Bash Profile
+  copy:
+    content: "{{ item.bash_profile }}"
+    dest: "{{ item.home | default('/home/' + item.username) }}/.bash_profile"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+  when: item.bash_profile is defined
+  loop: "{{ users }}"
