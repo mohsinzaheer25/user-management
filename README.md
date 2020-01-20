@@ -1,6 +1,6 @@
 # User Management
 
-Ansible role to create and setup linux users.
+An Ansible role manage linux users. It can create and setup the linux users on Ubuntu or Redhat.
 
 ## Requirements
 
@@ -8,7 +8,8 @@ Ansible role to create and setup linux users.
 
 ## Role Variables
 
-users is a dictonary with user inputs.
+users is a dictionary with user inputs.
+
 
 No. | Variable Name | Description
 ---|---|---
@@ -82,7 +83,7 @@ python -c 'import crypt,getpass; print(crypt.crypt(getpass.getpass(), crypt.mksa
 
 # Running Test
 
-You can make necessary changes to [playbook](molecule/default/playbook.yml) and [test file](molecule/default/test/test_default.rb) and run test using below commands to get test output.
+You can make necessary changes to [playbook](molecule/default/playbook.yml) and [test file](molecule/default/tests/test_default.rb) and run test using below commands to get test output.
 
 ```
 $ sudo molecule converge
