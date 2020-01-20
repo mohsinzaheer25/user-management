@@ -10,8 +10,8 @@ Ansible role to create and setup linux users.
 
 users is a dictonary with user inputs.
 
-    | Variable Name | Description
-----|---------------|------------
+No. | Variable Name | Description
+---|---|---
 1   | username      | Name of the user.
 2   | group         | Name of the user group.
 3   | groups        | List of groups, user need to be added.
@@ -82,7 +82,7 @@ python -c 'import crypt,getpass; print(crypt.crypt(getpass.getpass(), crypt.mksa
 
 # Running Test
 
-You can make necessary changes to [playbook](https://github.com/mohsinzaheer25/user-management/blob/master/molecule/default/playbook.yml) and test file [test_defaults.rb] (https://github.com/mohsinzaheer25/user-management/blob/master/molecule/default/tests/test_default.rb) and run test using below commands to get test output.
+You can make necessary changes to [playbook](molecule/default/playbook.yml) and [test file](molecule/default/test/test_default.rb) and run test using below commands to get test output.
 
 ```
 $ sudo molecule converge
