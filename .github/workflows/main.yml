@@ -1,0 +1,39 @@
+---
+name: Molecule Test
+on:
+  pull_request:
+    branches:
+    - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [2.7]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: user-management
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Verifying Python
+        run: python -V
+      
+      - name: Installing packages
+        run: |
+          sudo apt-get install -y ansible docker ruby-full
+          python -m pip install --upgrade pip
+          sudo pip install molecule docker
+          sudo gem install rubocop
+
+      - name: Running Molecule Test
+        run: |
+          cd user-management/
+          molecule converge
+          molecule verify
