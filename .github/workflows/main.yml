@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          path: molecule_demo
+          path: molecule_test
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
@@ -34,6 +34,6 @@ jobs:
 
       - name: Running Molecule Test
         run: |
-          cd molecule_demo/test-molecule/
+          cd molecule_test/user-management/
           molecule converge
           molecule verify
