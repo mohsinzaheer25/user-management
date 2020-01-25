@@ -26,7 +26,7 @@ jobs:
         run: python -V
       
       - name: Listing Folder
-        run: ls -ltrh 
+        run: ls -ltrh molecule_test/
 
       # - name: Installing packages
       #   run: |
