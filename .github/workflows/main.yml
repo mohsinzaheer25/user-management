@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          path: molecule_test
+          path: user-management
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
@@ -25,18 +25,15 @@ jobs:
       - name: Verifying Python
         run: python -V
       
-      - name: Listing Folder
-        run: ls -ltrh molecule_test/
+      - name: Installing packages
+        run: |
+          sudo apt-get install -y ansible docker ruby-full
+          python -m pip install --upgrade pip
+          sudo pip install molecule docker
+          sudo gem install rubocop
 
-      # - name: Installing packages
-      #   run: |
-      #     sudo apt-get install -y ansible docker ruby-full
-      #     python -m pip install --upgrade pip
-      #     sudo pip install molecule docker
-      #     sudo gem install rubocop
-
-      # - name: Running Molecule Test
-      #   run: |
-      #     cd molecule_test/user-management/
-      #     molecule converge
-      #     molecule verify
+      - name: Running Molecule Test
+        run: |
+          cd user-management/
+          molecule converge
+          molecule verify
