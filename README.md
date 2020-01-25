@@ -1,3 +1,5 @@
+![Molecule Test](https://github.com/mohsinzaheer25/user-management/workflows/Molecule%20Test/badge.svg)
+
 # User Management
 
 An Ansible role manage linux users. It can create and setup the linux users on **Ubuntu** or **Redhat**.
