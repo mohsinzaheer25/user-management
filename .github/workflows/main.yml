@@ -25,15 +25,18 @@ jobs:
       - name: Verifying Python
         run: python -V
       
-      - name: Installing packages
-        run: |
-          sudo apt-get install -y ansible docker ruby-full
-          python -m pip install --upgrade pip
-          sudo pip install molecule docker
-          sudo gem install rubocop
+      - name: Listing Folder
+        run: ls -ltrh 
 
-      - name: Running Molecule Test
-        run: |
-          cd molecule_test/user-management/
-          molecule converge
-          molecule verify
+      # - name: Installing packages
+      #   run: |
+      #     sudo apt-get install -y ansible docker ruby-full
+      #     python -m pip install --upgrade pip
+      #     sudo pip install molecule docker
+      #     sudo gem install rubocop
+
+      # - name: Running Molecule Test
+      #   run: |
+      #     cd molecule_test/user-management/
+      #     molecule converge
+      #     molecule verify
